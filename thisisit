@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h2 id="question">Do you want to play Mario Party?</h2>
+<div id="buttons"></div>
+<script>
+  const container = document.getElementById("buttons");
+  const question = document.getElementById("question");
+  let noCount = 1;
+  let askedOnce = false;
+  function renderButtons() {
+    container.innerHTML = "";
+    const buttons = [];
+    const yesBtn = document.createElement("button");
+    yesBtn.textContent = "Yes";
+    yesBtn.onclick = () => {
+      if (!askedOnce) {
+        askedOnce = true;
+        question.textContent = "Are you sure?";
+      } else {
+        noCount++;
+      }
+      renderButtons();
+    };
+    buttons.push(yesBtn);
+    for (let i = 0; i < noCount; i++) {
+      const noBtn = document.createElement("button");
+      noBtn.textContent = "No";
+      noBtn.onclick = () => alert("You chose No!");
+      buttons.push(noBtn);
+    }
+    for (let i = buttons.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [buttons[i], buttons[j]] = [buttons[j], buttons[i]];
+    }
+    buttons.forEach(btn => container.appendChild(btn));
+  }
+  renderButtons();
+</script>
+</body>
+</html>
